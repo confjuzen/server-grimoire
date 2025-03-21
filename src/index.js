@@ -1,9 +1,6 @@
-require('dotenv').config();
-const express = require('express');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -12,17 +9,10 @@ const sharp = require('sharp');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const app = express();
-const PORT = 4000;
 const DOMAIN = "http://localhost:4000/";
 
-app.use(express.json());
-app.use(cors());
-app.use('/images', express.static(path.join(__dirname, 'images')));
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+
 
 const UserSchema = new mongoose.Schema({
   email: String,
@@ -30,21 +20,7 @@ const UserSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', UserSchema);
 
-const BookSchema = new mongoose.Schema({
-  userId: String,
-  title: String,
-  author: String,
-  year: Number,
-  genre: String,
-  ratings: [{ 
-    userId: String, 
-    rating: Number,
-    _id: false
-  }],
-  averageRating: Number,
-  imageUrl: String,
-});
-const Book = mongoose.model('Book', BookSchema);
+
 
 const SECRET_KEY = process.env.SECRET_KEY || "mysecretkey";
 const createJwtToken = (data) => jwt.sign(data, SECRET_KEY, { expiresIn: '600m' });
@@ -74,9 +50,7 @@ app.post('/api/auth/login', async (req, res) => {
   res.json({ userId: user._id, token: createJwtToken({ sub: user._id }) });
 });
 
-app.get('/api/books', async (req, res) => {
-  res.json(await Book.find());
-});
+
 
 app.get('/api/books/:bookId', async (req, res) => {
   if (req.params.bookId === "bestrating") return res.json(await Book.find().sort({ averageRating: -1 }).limit(3));
@@ -158,4 +132,3 @@ app.post('/api/books/:bookId/rating', verifyToken, async (req, res) => {
   res.json(updatedBook);
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
