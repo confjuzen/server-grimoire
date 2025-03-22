@@ -1,7 +1,7 @@
-const app = require('../app');
-const mongoose = require('mongoose');
-const Book = require('../schemas/book');
+const Book = require('../schemas/book.js');
 
-app.get('/api/books', async (req, res) => {
+const getBooks = (async (req, res) => {
     res.json(await Book.find());
-  });
+});
+
+module.exports = getBooks;
