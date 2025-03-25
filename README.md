@@ -7,6 +7,5 @@
 how to run the project:
 ```bash
 git clone https://github.com/confjuzen/server-grimoire.git
-cd server-grimoire
-npm install
+server-grimoire/setup.sh
 ```
