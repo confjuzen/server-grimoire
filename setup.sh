@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd server-grimoire
 npm install
 node .&
