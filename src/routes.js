@@ -13,7 +13,9 @@ const updateBook = require('./routes/updateBook.js');
 
 const verifyToken = require('./services/verifyToken.js');
 
-
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }); 
 
 router.post('/auth/login', logIn);
 router.post('/auth/signup', signUp);
@@ -21,9 +23,8 @@ router.post('/auth/signup', signUp);
 router.get('/books', getBooks);
 router.get('/books/:id', getBook);
 router.delete('/books/:bookId', verifyToken, deleteBook);
-router.post('/books', postBook);
+router.post('/books', verifyToken, upload.single('image'), postBook);
 router.post('/books/:bookId/rating', verifyToken, rateBook);
-router.put('/books/:bookId', verifyToken, updateBook);
-
+router.put('/books/:bookId', verifyToken, upload.single('image'), updateBook);
 
 module.exports = router;

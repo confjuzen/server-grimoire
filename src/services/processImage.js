@@ -3,7 +3,11 @@ const path = require('path');
 const { DOMAIN, IMAGES } = require("../config");
 const fs = require('fs');
 
-async function processImage (req, res, fileBuffer, bookId){
+async function processImage ( fileBuffer, bookId){
+
+
+
+  
     if (!fs.existsSync(IMAGES)) fs.mkdirSync(IMAGES);
     const imgPath = path.join(IMAGES, `${bookId}.webp`);
     const image = sharp(fileBuffer);
