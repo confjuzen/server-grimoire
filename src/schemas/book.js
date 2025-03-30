@@ -8,12 +8,17 @@ const BookSchema = new mongoose.Schema({
   genre: String,
   ratings: [{ 
     userId: String, 
-    rating: Number,
+    grade: {
+      type: Number,
+      return: function(value) {
+        return value || this.rating;
+      }
+    },
     _id: false
   }],
   averageRating: Number,
   imageUrl: String,
-});
+}, { versionKey: false });
 
 const Book = mongoose.model('Book', BookSchema);
 

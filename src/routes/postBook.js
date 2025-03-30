@@ -11,9 +11,7 @@ const postBook =  async (req, res) => {
   book.imageUrl = await processImage(req.file.buffer, bookId);
   await book.save();
   console.log("log book updated url",book);
-  res.json({
-    message: "Book Added",
- });
+  res.status(200).json({ message: 'Objet modifié !' })
 };
 
 module.exports = postBook;
