@@ -1,9 +1,8 @@
-const Book = require("../schemas/book.js");
+const Book = require("../../models/book.js");
 const fs = require('fs');
 const path = require('path');
 
-const { DOMAIN, ROOT } = require("../config");
-
+const { DOMAIN, ROOT } = require("../../config.js");
 
 const deleteBook =  async (req, res) => {
     const book = await Book.findById(req.params.bookId);
@@ -13,7 +12,7 @@ const deleteBook =  async (req, res) => {
       if (fs.existsSync(imgPath)) fs.unlinkSync(imgPath);
     }
     await Book.deleteOne({ _id: book._id });
-    res.json({ message: "Book deleted" });
+    res.status(200).json({ message: "Book deleted" });
 };
 
 module.exports = deleteBook;

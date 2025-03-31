@@ -1,5 +1,5 @@
 
-const Book = require('../schemas/book.js');
+const Book = require('../../models/book.js');
 
 const getBook = async (req, res) => {
 

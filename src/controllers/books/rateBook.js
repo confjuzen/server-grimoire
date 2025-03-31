@@ -1,5 +1,5 @@
-const Book = require('../schemas/book.js');
-const calculateRating = require('../services/calculateRating.js');
+const Book = require('../../models/book.js');
+const calculateRating = require('../../utils/calculateRating.js');
 
 const rateBook = async (req, res) => {
     const book = await Book.findById(req.params.bookId);

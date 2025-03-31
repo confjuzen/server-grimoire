@@ -1,5 +1,4 @@
-const Book = require('../schemas/book.js');
-
+const Book = require('../models/book.js');
 
 const calculateRating = async (bookId) => {
     const book = await Book.findById(bookId);

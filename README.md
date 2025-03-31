@@ -6,6 +6,8 @@
 
 how to run the project:
 ```bash
-git clone https://github.com/confjuzen/server-grimoire.git
-./server-grimoire/setup.sh
+git clone https://github.com/confjuzen/server-grimoire.git toby-grimoire
+./toby-grimoire/setup.sh
 ```
+### MongoDB Required
+Modify .env with MongoDB URI
