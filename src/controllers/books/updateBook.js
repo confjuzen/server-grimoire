@@ -27,8 +27,8 @@ const updatedBook = async (req, res) => {
     
     res.status(200).json({message: 'book updated'});
   } catch (error) {
-    console.error("Error updating book:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error("Missing fields:", error);
+    res.status(400).json({ message: "Missing fields" });
   }
 };
 

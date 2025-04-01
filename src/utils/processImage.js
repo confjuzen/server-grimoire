@@ -25,13 +25,15 @@ async function processImage ( fileBuffer, bookId){
 
   const metadata = await image.metadata();
 
-  let sharpProcess = sharp(fileBuffer).webp({ quality: 90 });
+  let sharpProcess = sharp(fileBuffer);
 
   if (metadata.width / metadata.height > 206 / 260) {
     sharpProcess = sharpProcess.resize(412, 520, { fit: 'cover' });
   } else {
-    sharpProcess = sharpProcess.resize(null, 520);
+    sharpProcess = sharpProcess.resize(412, 520, { fit: 'contain', background: {r: 0, g: 0, b: 0, alpha: 0}});
   }
+  sharpProcess = sharpProcess.webp({ quality: 90 });
+
   await sharpProcess.toFile(imgPath);
 
   return `${DOMAIN}images/${filename}`;
