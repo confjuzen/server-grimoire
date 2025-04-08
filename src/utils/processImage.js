@@ -10,13 +10,13 @@ async function processImage ( fileBuffer, bookId){
 
   const book = await Book.findById(bookId);
   if (book && book.imageUrl) {
-      const imageName = book.imageUrl.replace(DOMAIN, "");
-      const oldImagePath = path.join(ROOT, imageName);
+    const imageName = book.imageUrl.replace(DOMAIN, "");
+    const oldImagePath = path.join(ROOT, imageName);
 
-      if (fs.existsSync(oldImagePath)) {
-          fs.unlinkSync(oldImagePath);
-          console.log(`Deleted old image: ${oldImagePath}`);
-      }
+    if (fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
+        console.log(`Deleted old image: ${oldImagePath}`);
+    }
   }
   const filename = `${bookId}_${Date.now()}.webp`;
   const imgPath = path.join(IMAGES, filename);
@@ -35,6 +35,7 @@ async function processImage ( fileBuffer, bookId){
   sharpProcess = sharpProcess.webp({ quality: 90 });
 
   await sharpProcess.toFile(imgPath);
+  console.log(`Image saved to: ${imgPath}`);
 
   return `${DOMAIN}images/${filename}`;
 };

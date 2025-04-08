@@ -10,14 +10,11 @@ const postBook =  async (req, res) => {
     const bookId = book._id.toString();
     book.imageUrl = await processImage(req.file.buffer, bookId);
     await book.save();
-    console.log("log: book updated",book);
     res.status(200).json({ message: 'book updated' })
   }
   catch (err) {
-    console.log("log missing fields or incorect file format:", err);
-    res.status(400).json({ message: 'missing or incorect file format' });
+    res.status(400).json({ message: 'missing feild or incorect file format' });
   }
-  
 };
 
 

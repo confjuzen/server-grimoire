@@ -7,7 +7,7 @@ const updatedBook = async (req, res) => {
 
     let updatedBookData
 
-    if (req.file) {
+    if (req.file && req.file.mimetype.startsWith('image/')){
       updatedBookData = JSON.parse(req.body.book);
       const bookId = book._id.toString();
       updatedBookData.imageUrl = await processImage(req.file.buffer, bookId);
@@ -17,18 +17,15 @@ const updatedBook = async (req, res) => {
       updatedBookData = req.body;
     }
 
-    const updatedBook = await Book.findByIdAndUpdate(
+    await Book.findByIdAndUpdate(
       req.params.bookId, 
       { $set: updatedBookData }, 
       { new: true, runValidators: true }
     );
-
-    console.log("log: book updated", updatedBook);
     
     res.status(200).json({message: 'book updated'});
   } catch (error) {
-    console.error("Missing fields:", error);
-    res.status(400).json({ message: "Missing fields" });
+    res.status(400).json({ message: "missing fields" });
   }
 };
 
